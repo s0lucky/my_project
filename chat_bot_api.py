@@ -121,23 +121,5 @@ while True:
             )
 
 
-# VkApi - класс
-# requests - запросы
-# VkUpload -  класс для работы с медиафайлами
-# items - диалоги
-# messages.getConversations - возвращает список бесед пользователя.
-# messages.send - ответить на сообщение пользователя
-# offset - параметр смещения
-# count - параметр максимальное число результатов, которые нужно получить
-# filter(unanswered) - фильтр бесед, помеченных как неотвеченные(только для групп вк)
-
-
-# info_about_man = vk.method(
-#   "users.get", {"user_ids": 1, "fields": "city"}
-# )
-# city_of_man = info_about_man[0]["city"]["title"]
-# pprint(city_of_man)
-
-
 
 
