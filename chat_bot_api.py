@@ -15,38 +15,57 @@ while True:
         sent = text_of_last_message.split(".")[0]
         user_id = info_about_messages["items"][0]["last_message"]["from_id"]
 
-        if sent == "https://vk":
-            domain = text_of_last_message.split("/")[-1]
-
-        info_about_wall = vk2.method(
-            "wall.get", {"offset": 0, "count": 1, "domain": domain}
-        )
-
         if text_of_last_message.lower() == "привет":
             vk.method(
                 "messages.send",
                 {
                     "user_id": user_id,
-                    "message": "Привет, я бот Антон",
+                    "message": "Привет, я бот Антон. Если хочешь проанализировать группу вк, то пришли мне ссылку",
                     "random_id": random.randint(1, 1000),
                 },
             )
 
-        elif text_of_last_message.lower() == "проанализировать группу":
+        if text_of_last_message.lower() == "что ты умеешь?":
+            vk.method(
+                "messages.send",
+                {
+                    "user_id": user_id,
+                    "message": "Я могу выполнить следующие команды:\n"
+                               "1)проанализировать группу\n"
+                    "P.S разработчик другому меня ещё не обучил, прости",
+                    "random_id": random.randint(1, 1000),
+                },
+            )
+        if text_of_last_message.lower() == "проанализировать группу":
+            vk.method(
+                "messages.send",
+                {
+                    "user_id": user_id,
+                    "message": "Что вы хотите получить?(введи номер)\n" 
+                               "1.Пост с максимальным количеством лайков\n"
+                               "2.Пост с максимальным количеством комментариев\n"
+                               "3.Пост с максимальным количеством репостов",
+                    "random_id": random.randint(1, 1000),
+                },
+            )
+
+        if sent == "https://vk":
+            domain = text_of_last_message.split("/")[-1]
+
+            info_about_wall = vk2.method(
+                "wall.get", {"offset": 0, "count": 1, "domain": domain}
+            )
 
             vk.method(
                 "messages.send",
                 {
                     "user_id": user_id,
-                    "message": "Что вы хотите получить?"
-                               "1)Пост с максимальным количеством лайков"
-                               "2)Пост с максимальным количеством комментариев"
-                               "3)Пост с максимальным количеством репостов",
+                    "message": "Спасибо. Теперь напиши 'проанализировать группу' или 'что ты умеешь?'",
                     "random_id": random.randint(1, 1000),
                 },
             )
 
-        elif text_of_last_message.lower() == "1":
+        if text_of_last_message.lower() == "1":
             count_of_likes = str(info_about_wall["items"][0]["likes"]["count"])
 
             vk.method(
@@ -58,7 +77,7 @@ while True:
                 },
             )
 
-        elif text_of_last_message.lower() == "2":
+        if text_of_last_message.lower() == "2":
             count_of_comments = info_about_wall["items"][0]["comments"]["count"]
 
             vk.method(
@@ -70,7 +89,7 @@ while True:
                 },
             )
 
-        elif text_of_last_message.lower() == "3":
+        if text_of_last_message.lower() == "3":
             count_of_reposts = info_about_wall["items"][0]["reposts"]["count"]
 
             vk.method(
@@ -78,16 +97,6 @@ while True:
                 {
                     "user_id": user_id,
                     "message": count_of_reposts,
-                    "random_id": random.randint(1, 1000),
-                },
-            )
-
-        else:
-            vk.method(
-                "messages.send",
-                {
-                    "user_id": user_id,
-                    "message": "Я тебя не понимаю",
                     "random_id": random.randint(1, 1000),
                 },
             )
